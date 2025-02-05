@@ -1,0 +1,71 @@
+﻿@using UrunStokTakip.Models
+@model List<Urun>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    @using (Html.BeginForm("Index", "Urun", FormMethod.Get))
+    {
+        <div style="display: flex; align-items: center;">
+            @Html.TextBox("ara", null, new { @class = "form-control", @placeholder = "Ürün adı veya açıklama arayınız" })
+            <input type="submit" name="btn" value="Ara" class="btn btn-info" />
+        </div>
+        <br />
+    }
+
+
+
+
+
+</div>
+<a href="/Urun/Ekle" class="btn btn-primary">Ekle</a>
+<br />
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>Resim</th>
+        <th>Ad</th>
+        <th>Açıklama</th>
+        <th>Kategori</th>
+        <th>Stok</th>
+        <th>Urunkodu</th>
+        @if (User.IsInRole("A"))
+        {
+            <th>Sil</th>
+            <th>Düzenle</th>
+        }
+
+        @if (User.IsInRole("U"))
+        {
+            <th> Sepete Ekle </th>
+
+        }
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td><img src="~/Content/Image/@item.Resim" width="80" height="80" /></td>          
+            <td>@item.Ad</td>
+            <td>@item.Aciklama</td>
+            <td>@item.Kategori.Ad</td>
+            <td>@item.Stok</td>
+
+            <td>@item.Urunkodu</td>
+            @if (User.IsInRole("A"))
+            {
+                
+                <td>@Html.ActionLink("Sil", "Sil", new { id = item.ID }, new { @class = "btn btn-danger", onclick = "return confirm('Silmek istiyor musunuz?')" })</td>
+                <td><a href="/Urun/Guncelle/@item.ID" class="btn btn-warning">Düzenle</a></td>
+
+            }
+            @if (User.IsInRole("U"))
+            {
+                <td><a href="/Sepet/SepeteEkle/@item.ID" class="btn btn-success">Sepete Ekle</a></td>
+
+            }
+        </tr>
+    }
+
+
+</table>

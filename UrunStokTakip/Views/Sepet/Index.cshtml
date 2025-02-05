@@ -1,0 +1,33 @@
+﻿@model List<UrunStokTakip.Models.Sepet>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Session["Ad"]</h2>
+<h3>Sepetim</h3>
+ <table class="table table-bordered">
+     <thead>
+         <tr>
+             <th>Ürün Bilgisi</th>
+             <th>Adet</th>
+             <th>Tarih</th>
+             <th>Resim</th>
+             <th>Sil</th>
+             <th>Satın Al</th>
+             <th>Ürün Bilgisi</th>
+         </tr>
+     </thead>
+     <tody>
+         @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Urun.Ad</td>
+                    <td>@item.Adet</td>
+                    
+                    <td>@Convert.ToDateTime(item.Tarih).ToString("dd/MM/yyyy")</td>
+                    <td><img src = "~/Content/Image/@item.Urun.Resim" width= "90" height="90"/></td>
+                </tr>
+            }
+     </tody>
+ </table>
